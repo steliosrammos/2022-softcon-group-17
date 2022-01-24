@@ -3,22 +3,32 @@ import { useForm } from 'react-hook-form';
 
 export default function App() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => {
+  const onSubmit = (data) => {
+
+    // Temporary to test out the api
+    const formatedData = {
+      fname: data.Name,
+      lname:  data.Email
+    }
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(formatedData)
     };
-        fetch("https://jsonplaceholder.typicode.com/posts", requestOptions)
-          .then(response => response.json())
-          .then(res => console.log(res));
+
+    fetch("http://127.0.0.1:5000/api/people", requestOptions)
+      .then(response => response.json())
+      .then(res => console.log(res))
+      .catch((error) => {
+        console.log('Failed to send POST request:', error);
+      })
   }
   console.log(errors);
-
   return (
     <section>
-    <div class="title">BOOKLET.</div>
-    <div class="text-form">Are you looking for a book? Get inspired.</div>
+    <div className="title">BOOKLET.</div>
+    <div className="text-form">Are you looking for a book? Get inspired.</div>
 
     <form onSubmit={handleSubmit(onSubmit)}>
       <input type="text" placeholder="Name" {...register("Name", {required: true, maxLength: 100})} />
@@ -38,7 +48,7 @@ export default function App() {
       <input type="submit" value="Send"/>
     </form>
 
-    <div class="footer">
+    <div className="footer">
       <p> &copy; Software Containerization 2022 [Group 17] </p>
     </div>
 
