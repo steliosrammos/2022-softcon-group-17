@@ -17,7 +17,7 @@ ns.model = (function() {
         'read': function() {
             let ajax_options = {
                 type: 'GET',
-                url: 'api/people',
+                url: 'api/orders',
                 accepts: 'application/json',
                 dataType: 'json'
             };
@@ -29,61 +29,61 @@ ns.model = (function() {
                 $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
             })
         },
-        create: function(fname, lname) {
-            let ajax_options = {
-                type: 'POST',
-                url: 'api/people',
-                accepts: 'application/json',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify({
-                    'fname': fname,
-                    'lname': lname
-                })
-            };
-            $.ajax(ajax_options)
-            .done(function(data) {
-                $event_pump.trigger('model_create_success', [data]);
-            })
-            .fail(function(xhr, textStatus, errorThrown) {
-                $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
-            })
-        },
-        update: function(fname, lname) {
-            let ajax_options = {
-                type: 'PUT',
-                url: 'api/people/' + lname,
-                accepts: 'application/json',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify({
-                    'fname': fname,
-                    'lname': lname
-                })
-            };
-            $.ajax(ajax_options)
-            .done(function(data) {
-                $event_pump.trigger('model_update_success', [data]);
-            })
-            .fail(function(xhr, textStatus, errorThrown) {
-                $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
-            })
-        },
-        'delete': function(lname) {
-            let ajax_options = {
-                type: 'DELETE',
-                url: 'api/people/' + lname,
-                accepts: 'application/json',
-                contentType: 'plain/text'
-            };
-            $.ajax(ajax_options)
-            .done(function(data) {
-                $event_pump.trigger('model_delete_success', [data]);
-            })
-            .fail(function(xhr, textStatus, errorThrown) {
-                $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
-            })
-        }
+        // create: function(fname, lname) {
+        //     let ajax_options = {
+        //         type: 'POST',
+        //         url: 'api/people',
+        //         accepts: 'application/json',
+        //         contentType: 'application/json',
+        //         dataType: 'json',
+        //         data: JSON.stringify({
+        //             'fname': fname,
+        //             'lname': lname
+        //         })
+        //     };
+        //     $.ajax(ajax_options)
+        //     .done(function(data) {
+        //         $event_pump.trigger('model_create_success', [data]);
+        //     })
+        //     .fail(function(xhr, textStatus, errorThrown) {
+        //         $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
+        //     })
+        // },
+        // update: function(fname, lname) {
+        //     let ajax_options = {
+        //         type: 'PUT',
+        //         url: 'api/people/' + lname,
+        //         accepts: 'application/json',
+        //         contentType: 'application/json',
+        //         dataType: 'json',
+        //         data: JSON.stringify({
+        //             'fname': fname,
+        //             'lname': lname
+        //         })
+        //     };
+        //     $.ajax(ajax_options)
+        //     .done(function(data) {
+        //         $event_pump.trigger('model_update_success', [data]);
+        //     })
+        //     .fail(function(xhr, textStatus, errorThrown) {
+        //         $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
+        //     })
+        // },
+        // 'delete': function(lname) {
+        //     let ajax_options = {
+        //         type: 'DELETE',
+        //         url: 'api/people/' + lname,
+        //         accepts: 'application/json',
+        //         contentType: 'plain/text'
+        //     };
+        //     $.ajax(ajax_options)
+        //     .done(function(data) {
+        //         $event_pump.trigger('model_delete_success', [data]);
+        //     })
+        //     .fail(function(xhr, textStatus, errorThrown) {
+        //         $event_pump.trigger('model_error', [xhr, textStatus, errorThrown]);
+        //     })
+        // }
     };
 }());
 

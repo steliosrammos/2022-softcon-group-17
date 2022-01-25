@@ -1,24 +1,40 @@
 import os
 from config import db
-from models import Person
+from models import Meal, Order
 
 # Data to initialize database with
-PEOPLE = [
-    {"fname": "Doug", "lname": "Farrell"},
-    {"fname": "Kent", "lname": "Brockman"},
-    {"fname": "Bunny", "lname": "Easter"},
+ORDERS = [
+    { "total": 10, "meals": [1] },
+    { "total": 20, "meals": [1, 2] },
+    { "total": 15, "meals": [3] }
+]
+
+MEALS = [
+    { "name": "Mom's spaghetti", "price": 1, "stock": 10 },
+    { "name": "Fresh fish from the Dock", "price": 2, "stock": 1 },
+    { "name": "That's Helm of a soup", "price": 3, "stock": 5 }
 ]
 
 # Delete database file if it exists currently
-if os.path.exists("people.db"):
-    os.remove("people.db")
+if os.path.exists("bistro.db"):
+    os.remove("bistro.db")
 
 # Create the database
 db.create_all()
 
 # iterate over the PEOPLE structure and populate the database
-for person in PEOPLE:
-    p = Person(lname=person.get("lname"), fname=person.get("fname"))
-    db.session.add(p)
+for meal in MEALS:
+    m = Meal(name=meal.get("name"), price=meal.get("price"), stock=meal.get("stock"))
+    db.session.add(m)
+
+for order in ORDERS:
+    o = Order(total=order.get("total"))
+    for meal_id in order.get("meals"):
+        print('MEAL ID:', meal_id)
+        m = Meal.query.filter(Meal.id == meal_id).one_or_none()
+        print('MEAL:', m)
+        o.meals.append(m)
+
+    db.session.add(o)
 
 db.session.commit()

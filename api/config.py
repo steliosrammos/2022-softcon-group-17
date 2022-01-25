@@ -14,7 +14,7 @@ app = connex_app.app
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Build the Sqlite ULR for SqlAlchemy
-sqlite_url = "sqlite:///" + os.path.join(basedir, "people.db")
+sqlite_url = "sqlite:///" + os.path.join(basedir, "bistro.db")
 
 # Configure the SqlAlchemy part of the app instance
 app.config["SQLALCHEMY_ECHO"] = True

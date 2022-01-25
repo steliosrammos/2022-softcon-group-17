@@ -12,124 +12,121 @@ basePath: "/api"
 
 # Paths supported by the server application
 paths:
-  /people:
+  /orders:
     get:
-      operationId: "people.read_all"
+      operationId: "orders.read_all"
       tags:
-        - "People"
-      summary: "The people data structure supported by the server application"
-      description: "Read the list of people"
+        - "Order"
+      summary: "The orders data structure supported by the server application"
+      description: "Read the list of orders"
       parameters:
           - name: length
             in: query
             type: integer
-            description: Number of people to get from people list
+            description: Number of orders to get from orders list
             required: false
           - name: offset
             in: query
             type: integer
-            description: Offset from beginning of people list
+            description: Offset from beginning of orders list
             required: false
       responses:
         200:
-          description: "Successful read people list operation"
+          description: "Successful read orders list operation"
           schema:
             type: "array"
             items:
               properties:
-                fname:
-                  type: "string"
-                lname:
-                  type: "string"
+                total:
+                    type: integer
+                    description: Total for the order
+                meals:
+                    type: "array"
+                    items:
+                      properties:
+                        meal_id:
+                          type: "integer"
+                        quantity:
+                          type: "integer"
+                    description: Meals included in order to create
                 timestamp:
                   type: "string"
-    post:
-        operationId: people.create
-        tags:
-            - People
-        summary: Create person
-        description: Create
-        parameters:
-            - name: person
-              in: body
-              description: Person to create
-              schema:
-                  type: object
-                  properties:
-                      fname:
-                          type: string
-                          description: First name of person to create
-                      lname:
-                          type: string
-                          description: last name of person to create
-        responses:
-            201:
-                description: Successfully created person in list
+  #   post:
+  #       operationId: orders.create
+  #       tags:
+  #           - Order
+  #       summary: Create order
+  #       description: Create
+  #       parameters:
+  #           - name: order
+  #             in: body
+  #             description: Order to create
+  #             schema:
+  #                 type: object
+  #                 properties:
+  #                     total:
+  #                         type: integer
+  #                         description: Total for the order
+  #                     meals:
+  #                         type: "array"
+  #                         items:
+  #                           properties:
+  #                             meal_id:
+  #                               type: "integer"
+  #                             quantity:
+  #                               type: "integer"
+  #                         description: Meals included in order to create
+  #       responses:
+  #           201:
+  #               description: Successfully created order in list
 
 
 
-  /people/{person_id}:
-    get:
-      operationId: "people.read_person"
-      tags:
-        - "People"
-      summary: "The people data structure supported by the server application"
-      description: "Read the list of people"
-      parameters:
-          - name: person_id
-            in: path
-            type: string
-            description: Last name of person
-            required: true
-      responses:
-        200:
-          description: "Successful read people list operation"
-          schema:
-            type: "array"
-            items:
-              properties:
-                fname:
-                  type: "string"
-                lname:
-                  type: "string"
-                timestamp:
-                  type: "string"
-    put:
-      operationId: "people.update"
-      tags:
-        - "People"
-      summary: "The people data structure supported by the server application"
-      description: "Update person"
-      parameters:
-          - name: person_id
-            in: path
-            type: string
-            description: Last name of person
-            required: true
-          - name: person
-            in: body
-            schema:
-                type: object
-                properties:
-                    fname:
-                        type: string
-                    lname:
-                        type: string
-      responses:
-        200:
-          description: "Successful updated person in people list"
-    delete:
-      operationId: "people.delete"
-      tags:
-        - "People"
-      summary: "The people data structure supported by the server application"
-      description: "Delete person"
-      parameters:
-          - name: person_id
-            in: path
-            type: string
-            description: Last name of person
-            required: true
-      responses:
-        200:
-          description: "Successful deleted person in people list"
+  # /orders/{order_id}:
+  #   get:
+  #     operationId: "order.read_order"
+  #     tags:
+  #       - "Order"
+  #     summary: "The order data structure supported by the server application"
+  #     description: "Read the list of order"
+  #     parameters:
+  #         - name: order_id
+  #           in: path
+  #           type: id
+  #           description: ID of order
+  #           required: true
+  #     responses:
+  #       200:
+  #         description: "Successful read order list operation"
+  #         schema:
+  #           type: "array"
+  #           items:
+  #             properties:
+  #               total:
+  #                 type: "int"
+  #               meals:
+  #                 type: "array"
+  #                 items:
+  #                   properties:
+  #                     meal_id:
+  #                       type: "integer"
+  #                     quantity:
+  #                       type: "integer"
+  #                 description: Meals included in order to create
+  #               timestamp:
+  #                 type: "string"
+    # delete:
+    #   operationId: "order.delete"
+    #   tags:
+    #     - "Order"
+    #   summary: "The order data structure supported by the server application"
+    #   description: "Delete order"
+    #   parameters:
+    #       - name: order_id
+    #         in: path
+    #         type: integer
+    #         description: Last name of order
+    #         required: true
+    #   responses:
+    #     200:
+    #       description: "Successful deleted order in order list"
