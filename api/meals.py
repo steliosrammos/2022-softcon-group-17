@@ -21,7 +21,7 @@ MEALS = {
         "timestamp": get_timestamp()
     },
     2: {
-        "price": 2,Meals.order_id
+        "price": 2,
         "stock": 1,
         "timestamp": get_timestamp()
     },

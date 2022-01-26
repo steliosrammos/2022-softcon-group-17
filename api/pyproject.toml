@@ -5,11 +5,11 @@ description = "API for the SoftCon-2022 Library!"
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 Flask = "^2.0.2"
 Flask-SQLAlchemy = "^2.5.1"
 flask-marshmallow = "^0.14.0"
-connexion = "^2.10.0"
+connexion = {extras=["swagger-ui"], version = "^2.10.0"}
 marshmallow-sqlalchemy = "^0.27.0"
 Flask-Cors = "^3.0.10"
 

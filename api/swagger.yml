@@ -19,17 +19,6 @@ paths:
         - "Order"
       summary: "The orders data structure supported by the server application"
       description: "Read the list of orders"
-      parameters:
-          - name: length
-            in: query
-            type: integer
-            description: Number of orders to get from orders list
-            required: false
-          - name: offset
-            in: query
-            type: integer
-            description: Offset from beginning of orders list
-            required: false
       responses:
         200:
           description: "Successful read orders list operation"
@@ -37,9 +26,12 @@ paths:
             type: "array"
             items:
               properties:
+                id:
+                    type: integer
+                    description: Order ID 
                 total:
                     type: integer
-                    description: Total for the order
+                    description: Total price for the order
                 meals:
                     type: "array"
                     items:
@@ -51,34 +43,35 @@ paths:
                     description: Meals included in order to create
                 timestamp:
                   type: "string"
-  #   post:
-  #       operationId: orders.create
-  #       tags:
-  #           - Order
-  #       summary: Create order
-  #       description: Create
-  #       parameters:
-  #           - name: order
-  #             in: body
-  #             description: Order to create
-  #             schema:
-  #                 type: object
-  #                 properties:
-  #                     total:
-  #                         type: integer
-  #                         description: Total for the order
-  #                     meals:
-  #                         type: "array"
-  #                         items:
-  #                           properties:
-  #                             meal_id:
-  #                               type: "integer"
-  #                             quantity:
-  #                               type: "integer"
-  #                         description: Meals included in order to create
-  #       responses:
-  #           201:
-  #               description: Successfully created order in list
+    post:
+        operationId: orders.create
+        tags:
+            - Order
+        summary: Create order
+        description: Create
+        parameters:
+            - name: order
+              in: body
+              description: Order to create
+              schema:
+                  type: object
+                  properties:
+                      total:
+                          type: integer
+                          description: Total for the order
+                      meals:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              meal_id:
+                                type: "integer"
+                              quantity:
+                                type: "integer"
+                          description: Meals included in order to create
+        responses:
+            201:
+                description: Successfully created order in list
 
 
 

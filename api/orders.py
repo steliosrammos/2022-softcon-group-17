@@ -14,25 +14,25 @@ from config import db
 def get_timestamp():
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
 
-ORDERS = {
-    1: {
-        "total": 10,
-        "meals": [1],
-        "timestamp": get_timestamp()
-    },
-    2: {
-        "total": 20,
-        "meals": [1, 2],
-        "timestamp": get_timestamp()
-    },
-    3: {
-        "total": 15,
-        "meals": [3],
-        "timestamp": get_timestamp()
-    }
-}
+# ORDERS = {
+#     1: {
+#         "total": 10,
+#         "meals": [1],
+#         "timestamp": get_timestamp()
+#     },
+#     2: {
+#         "total": 20,
+#         "meals": [1, 2],
+#         "timestamp": get_timestamp()
+#     },
+#     3: {
+#         "total": 15,
+#         "meals": [3],
+#         "timestamp": get_timestamp()
+#     }
+# }
 
-def read_all(length=len(ORDERS), offset=0):
+def read_all():
 
     people = Order.query.order_by(Order.timestamp).all()
 
@@ -55,9 +55,20 @@ def create(order):
 
     # if not existing_order:
     schema = OrderSchema()
-    new_order = schema.load(order, session=db.session)
+    print('\nORDER:')
+    print(order)
+    print()
+    new_order = schema.load({order.get('total')}, session=db.session)
 
     db.session.add(new_order)
+
+    identifier = MealIdentifierSchema()
+    for meal in order.get('meals'):
+        new_meal = identifier.load(meal)
+        db.session.add(new_meal)
+
+
+
     db.session.commit()
 
     return schema.dump(new_order), 201
