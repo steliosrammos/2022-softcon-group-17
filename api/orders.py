@@ -1,4 +1,5 @@
 from datetime import datetime
+from timeit import timeit
 
 from flask import (
         abort
@@ -6,7 +7,9 @@ from flask import (
 
 from models import (
         Order,
-        OrderSchema
+        Meal,
+        OrderMeal,
+        OrderSchema,
 )
 
 from config import db
@@ -52,23 +55,18 @@ def read_order(order_id):
 
 def create(order):
     # existing_order = Order.query.filter(Order.fname == fname).filter(Order.lname == lname).one_or_none()
-
-    # if not existing_order:
+    print(f'\nORDER:\n{order}\n')
     schema = OrderSchema()
-    print('\nORDER:')
-    print(order)
-    print()
-    new_order = schema.load({order.get('total')}, session=db.session)
-
-    db.session.add(new_order)
-
-    identifier = MealIdentifierSchema()
+    new_order = schema.load({ 'total': order.get('total')}, session=db.session)
+    
+    #My Version Using my Tables
     for meal in order.get('meals'):
-        new_meal = identifier.load(meal)
-        db.session.add(new_meal)
-
-
-
+        print(f'Meal: {meal}')
+        order_meal = OrderMeal(meal_id=meal['id'], quantity=meal['quantity'])
+        order_meal.order = new_order
+        new_order.meals.append(order_meal)
+    
+    db.session.add(new_order)
     db.session.commit()
 
     return schema.dump(new_order), 201

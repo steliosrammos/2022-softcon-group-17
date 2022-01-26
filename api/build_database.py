@@ -1,6 +1,6 @@
 import os
 from config import db
-from models import Meal, Order
+from models import Meal, Order, OrderMeal
 
 # Data to initialize database with
 ORDERS = [
@@ -29,11 +29,8 @@ for meal in MEALS:
 
 for order in ORDERS:
     o = Order(total=order.get("total"))
-    for meal_id in order.get("meals"):
-        print('MEAL ID:', meal_id)
-        m = Meal.query.filter(Meal.id == meal_id).one_or_none()
-        print('MEAL:', m)
-        o.meals.append(m)
+    [o.meals.append(OrderMeal(meal_id=meal_id)) for meal_id in order['meals']]
+        
 
     db.session.add(o)
 

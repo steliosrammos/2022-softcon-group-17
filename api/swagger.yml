@@ -64,7 +64,7 @@ paths:
                           items:
                             type: object
                             properties:
-                              meal_id:
+                              id:
                                 type: "integer"
                               quantity:
                                 type: "integer"
