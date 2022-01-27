@@ -16,11 +16,15 @@ class Meal(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class OrderMeal(db.Model):
-    __tablename__ = "order_meal"
-    order_id = db.Column(db.ForeignKey('order.id'), primary_key=True)
-    order = db.relationship('Order', backref='meals', lazy='joined')
+    __tablename__ = 'order_meal'
+    order_id = db.Column(db.ForeignKey('order.id', ondelete='cascade'), primary_key=True)
+    #order = db.relationship('Order', backref='meals', lazy='joined')
+    order = db.relationship('Order', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
+    #order = db.relationship('Order', backref='meals', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
+    #meal = db.relationship('Meals', backref='meals') #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
+    meal = db.relationship('Meal', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
 
-    meal_id = db.Column(db.ForeignKey('meal.id'), primary_key=True)
+    meal_id = db.Column(db.ForeignKey('meal.id', ondelete='cascade'), primary_key=True)
     quantity = db.Column(db.Integer)
 
 class MealSchema(ma.SQLAlchemyAutoSchema):

@@ -65,9 +65,9 @@ paths:
                             type: object
                             properties:
                               id:
-                                type: "integer"
+                                type: integer
                               quantity:
-                                type: "integer"
+                                type: integer
                           description: Meals included in order to create
         responses:
             201:
@@ -75,7 +75,7 @@ paths:
 
 
 
-  # /orders/{order_id}:
+  /orders/{order_id}:
   #   get:
   #     operationId: "order.read_order"
   #     tags:
@@ -108,18 +108,18 @@ paths:
   #                 description: Meals included in order to create
   #               timestamp:
   #                 type: "string"
-    # delete:
-    #   operationId: "order.delete"
-    #   tags:
-    #     - "Order"
-    #   summary: "The order data structure supported by the server application"
-    #   description: "Delete order"
-    #   parameters:
-    #       - name: order_id
-    #         in: path
-    #         type: integer
-    #         description: Last name of order
-    #         required: true
-    #   responses:
-    #     200:
-    #       description: "Successful deleted order in order list"
+    delete:
+      operationId: orders.delete
+      tags:
+        - Order
+      summary: The order data structure supported by the server application
+      description: Delete order
+      parameters:
+          - name: order_id
+            in: path
+            type: integer
+            description: Order ID
+            required: true
+      responses:
+        200:
+          description: Successful deleted order in order list

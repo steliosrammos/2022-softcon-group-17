@@ -17,24 +17,6 @@ from config import db
 def get_timestamp():
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
 
-# ORDERS = {
-#     1: {
-#         "total": 10,
-#         "meals": [1],
-#         "timestamp": get_timestamp()
-#     },
-#     2: {
-#         "total": 20,
-#         "meals": [1, 2],
-#         "timestamp": get_timestamp()
-#     },
-#     3: {
-#         "total": 15,
-#         "meals": [3],
-#         "timestamp": get_timestamp()
-#     }
-# }
-
 def read_all():
 
     people = Order.query.order_by(Order.timestamp).all()
@@ -54,7 +36,7 @@ def read_order(order_id):
         abort(404, f'Order not found for ID: {order_id}')
 
 def create(order):
-    # existing_order = Order.query.filter(Order.fname == fname).filter(Order.lname == lname).one_or_none()
+
     print(f'\nORDER:\n{order}\n')
     schema = OrderSchema()
     new_order = schema.load({ 'total': order.get('total')}, session=db.session)
@@ -63,19 +45,30 @@ def create(order):
     for meal in order.get('meals'):
         print(f'Meal: {meal}')
         order_meal = OrderMeal(meal_id=meal['id'], quantity=meal['quantity'])
-        order_meal.order = new_order
-        new_order.meals.append(order_meal)
+        #order_meal.order = new_order
+        #order_meal.order.append(new_order)
+        db.session.add(order_meal)
+        #new_order.append(order_meal)
+        #new_order.meals.append(order_meal)
     
     db.session.add(new_order)
     db.session.commit()
 
     return schema.dump(new_order), 201
-    # else:
-    #     abort(409, f'Order {fname} {lname} already exists')
 
 def delete(order_id):
 
-    Order.query.filter(Order.id == order_id).delete()
+    print('Inside delete')
+
+    delete_order = Order.query.filter(Order.id == order_id).one_or_none()
+
+    if not delete_order:
+        print('No order found')
+        return
+
+    print('Order found. Deleting now...')
+
+    db.session.delete(delete_order)
     db.session.commit()
 
 def update(order_id, order):
