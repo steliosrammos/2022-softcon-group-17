@@ -19,10 +19,19 @@ class OrderMeal(db.Model):
     __tablename__ = 'order_meal'
     order_id = db.Column(db.ForeignKey('order.id', ondelete='cascade'), primary_key=True)
     #order = db.relationship('Order', backref='meals', lazy='joined')
-    order = db.relationship('Order', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
-    #order = db.relationship('Order', backref='meals', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
-    #meal = db.relationship('Meals', backref='meals') #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
-    meal = db.relationship('Meal', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
+    #order = db.relationship('Order', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
+    #order = db.relationship('Order', backref='meals', cascade='all, delete, delete-orphan', single_parent=True) #, passive_deletes=True)
+    order = db.relationship(
+            'Order', backref=db.backref('meals', 
+                cascade='all',
+                passive_deletes=True))
+    meal = db.relationship(
+            'Meal', backref=db.backref('orders', 
+                cascade='all',
+                passive_deletes=True))
+    #order = db.relationship('Order', backref='meals', cascade='all, delete, delete-orphan', single_parent=True) #, passive_deletes=True)
+    #order = db.relationship('Order', backref='meals', lazy='joined')
+    #meal = db.relationship('Meal', cascade='all, delete, delete-orphan', single_parent=True, passive_deletes=True) #, cascade='all, delete', passive_deletes=True)#, lazy='joined')
 
     meal_id = db.Column(db.ForeignKey('meal.id', ondelete='cascade'), primary_key=True)
     quantity = db.Column(db.Integer)

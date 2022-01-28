@@ -5,3 +5,4 @@ connexion
 connexion[swagger-ui]
 marshmallow-sqlalchemy
 Flask-Cors
+psycopg2

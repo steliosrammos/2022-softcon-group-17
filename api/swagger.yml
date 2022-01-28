@@ -76,38 +76,74 @@ paths:
 
 
   /orders/{order_id}:
-  #   get:
-  #     operationId: "order.read_order"
-  #     tags:
-  #       - "Order"
-  #     summary: "The order data structure supported by the server application"
-  #     description: "Read the list of order"
-  #     parameters:
-  #         - name: order_id
-  #           in: path
-  #           type: id
-  #           description: ID of order
-  #           required: true
-  #     responses:
-  #       200:
-  #         description: "Successful read order list operation"
-  #         schema:
-  #           type: "array"
-  #           items:
-  #             properties:
-  #               total:
-  #                 type: "int"
-  #               meals:
-  #                 type: "array"
-  #                 items:
-  #                   properties:
-  #                     meal_id:
-  #                       type: "integer"
-  #                     quantity:
-  #                       type: "integer"
-  #                 description: Meals included in order to create
-  #               timestamp:
-  #                 type: "string"
+    put:
+      operationId: "orders.update"
+      tags:
+        - "Order"
+      summary: "The order data structure supported by the server application"
+      description: "Update orders"
+      parameters:
+        - name: order_id
+          in: path
+          type: string
+          description: Order ID
+          required: true
+        - name: order
+          in: body
+          description: Order to create
+          required: true
+          schema:
+              type: object
+              properties:
+                  total:
+                      type: integer
+                      description: Total for the order
+                  meals:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          quantity:
+                            type: integer
+                      description: Meals included in order to create
+      responses:
+        200:
+          description: "Successful updated person in people list"
+    get:
+      operationId: "orders.read_order"
+      tags:
+        - "Order"
+      summary: "The order data structure supported by the server application"
+      description: "Read the list of order"
+      parameters:
+        - name: order_id
+          in: path
+          type: integer
+          description: ID of single order
+          required: true
+      responses:
+        200:
+          description: "Successful read order list operation"
+          schema:
+            type: "object"
+            items:
+              properties:
+                total:
+                  type: "int"
+                meals:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      meal_id:
+                        type: "integer"
+                      quantity:
+                        type: "integer"
+                  description: Meals included in order to create
+                timestamp:
+                  type: "string"
     delete:
       operationId: orders.delete
       tags:

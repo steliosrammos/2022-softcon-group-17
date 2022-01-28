@@ -45,11 +45,8 @@ def create(order):
     for meal in order.get('meals'):
         print(f'Meal: {meal}')
         order_meal = OrderMeal(meal_id=meal['id'], quantity=meal['quantity'])
-        #order_meal.order = new_order
-        #order_meal.order.append(new_order)
         db.session.add(order_meal)
-        #new_order.append(order_meal)
-        #new_order.meals.append(order_meal)
+        new_order.meals.append(order_meal)
     
     db.session.add(new_order)
     db.session.commit()

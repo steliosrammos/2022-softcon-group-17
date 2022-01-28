@@ -16,9 +16,10 @@ MEALS = [
 ]
 
 # Delete database file if it exists currently
-if os.path.exists("bistro.db"):
-    os.remove("bistro.db")
+#if os.path.exists("bistro.db"):
+#    os.remove("bistro.db")
 
+db.drop_all()
 # Create the database
 db.create_all()
 
@@ -30,7 +31,6 @@ for meal in MEALS:
 for order in ORDERS:
     o = Order(total=order.get("total"))
     [o.meals.append(OrderMeal(meal_id=meal_id)) for meal_id in order['meals']]
-        
 
     db.session.add(o)
 

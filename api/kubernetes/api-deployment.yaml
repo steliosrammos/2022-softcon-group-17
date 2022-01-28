@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: softcon-api-deployment
+  labels:
+    app: softcon-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: softcon-api
+  template:
+    metadata:
+      labels:
+        app: softcon-api
+    spec:
+      containers:
+      - name: softcon-api-container
+        image: ringogroenewegen/softcon-api
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+            - name: foo
+              mountPath: "/etc/foo"
+              readOnly: true
+      volumes:
+      - name: foo
+        secret:
+          secretName: postgres-secret
