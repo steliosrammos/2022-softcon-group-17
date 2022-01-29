@@ -19,7 +19,23 @@ def get_timestamp():
 
 def read_all():
 
-    people = Order.query.order_by(Order.timestamp).all()
+    order_ids = Order.query.with_entities(Order.order_id).all()
+
+    for order_id in order_ids:
+        mealorders = MealOrder.query.order_
+
+    mealorders = MealOrder.query.order_by(MealOrder.timestamp).all()
+
+    all_orders = []
+    for mealorder in mealorders:
+        order_id = mealorder['order_id']
+        if not order_id in all_orders:
+            all_orders[order_id] = []
+        all_orders[order_id]({
+            'order_id': mealorder['order_id'],
+            
+
+
 
     order_schema = OrderSchema(many=True)
 
@@ -69,9 +85,20 @@ def delete(order_id):
     db.session.commit()
 
 def update(order_id, order):
-    # First delete existing order 
+    '''
+    `order`: array of meals for which `quantity` has changed
+        contains `total` field which is the new total for the order
+    '''
 
-    delete(order_id)
-    Order.query.filter(Order.id == order_id).update(order)
+    for meal in order['meals']:
+        meal_id = meal['id']
+        ordermeal = OrderMeal.query.filter(OrderMeal.order_id == order_id and OrderMeal.meal_id == meal_id).one_or_none()
+        if not ordermeal:
+            abort(404, f'MealOrder not found for Order ID: {order_id} and Meal ID: {meal_id}')
+        ordermeal.quantity = meal['quantity']
+    order = Order.query.filter(Order.id == order_id).one_or_none()
+    if not order:
+        abort(404, f'Order not found for Order ID: {order_id}')
+    order.total = order['total']
+
     db.session.commit()
-

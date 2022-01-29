@@ -131,7 +131,7 @@ paths:
             items:
               properties:
                 total:
-                  type: "int"
+                  type: "integer"
                 meals:
                   type: "array"
                   items:
@@ -141,7 +141,7 @@ paths:
                         type: "integer"
                       quantity:
                         type: "integer"
-                  description: Meals included in order to create
+                  description: test
                 timestamp:
                   type: "string"
     delete:
