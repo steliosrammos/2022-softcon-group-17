@@ -7,7 +7,6 @@ from flask import (
 
 from models import (
         Order,
-        Meal,
         OrderMeal,
         OrderSchema,
 )
@@ -17,39 +16,30 @@ from config import db
 def get_timestamp():
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
 
-def read_all():
-    print('Fetching all orders')
-    orders = Order.query.all()
-    # for order_id in order_ids:
-    #     mealorders = OrderMeal.query.order_
-
-    all_orders = []
-    for order in orders:
-        order_meals = { 
+def fetch_order_meals(order):
+    order_meals = { 
             'id': order.id,
             'meals': [],
             'timestamp': order.timestamp,
             'total': order.total
         }
         
-        meals = OrderMeal.\
-            query.filter(OrderMeal.order_id == order.id).\
-            with_entities(OrderMeal.meal_id, OrderMeal.quantity).all()
-        
-        [order_meals['meals'].append({ 'meal_id': meal_id, 'quantity': quantity }) for meal_id, quantity in meals]
-        all_orders.append(order_meals)
-    print(all_orders)
-    return all_orders
+    meals = OrderMeal.\
+        query.filter(OrderMeal.order_id == order.id).\
+        with_entities(OrderMeal.meal_id, OrderMeal.quantity).all()
+    
+    [order_meals['meals'].append({ 'meal_id': meal_id, 'quantity': quantity }) for meal_id, quantity in meals]
+    
+    return order_meals
 
-    return order_schema.dump(all_orders)
+def read_all():
+    return [fetch_order_meals(order) for order in Order.query.all()]
 
 def read_order(order_id):
 
     order = Order.query.filter(order_id == Order.id).one_or_none()
-
     if order:
-        order_schema = OrderSchema()
-        return order_schema.dump(order)
+        return fetch_order_meals(order)
     else:
         abort(404, f'Order not found for ID: {order_id}')
 
