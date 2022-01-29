@@ -25,21 +25,52 @@ body {
   padding-bottom: 100px;
 }
 
-input, select, option {
+select, option {
+  background-color: #35858B;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+input{
   background-color: #35858B;
   border: none;
   color: white;
   padding: 16px 32px;
   text-decoration: none;
-  margin: 4px 2px;
   cursor: pointer;
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+input:hover {
+  background-color: #219F94;
+}
+
+table{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th{
+  padding: 0px 10px 20px 10px;
+  border-bottom: 1px solid white;
+}
+
+td{
+  padding-top: 5px;
 }
 
 .footer {
    position:absolute;
    bottom:0;
    width:100%;
-   height:60px;   /* Height of the footer */
+   height:60px;
    background: black;
    color: white;
 }
