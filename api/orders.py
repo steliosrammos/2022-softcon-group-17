@@ -18,28 +18,30 @@ def get_timestamp():
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
 
 def read_all():
-
-    order_ids = Order.query.with_entities(Order.order_id).all()
-
-    for order_id in order_ids:
-        mealorders = MealOrder.query.order_
-
-    mealorders = MealOrder.query.order_by(MealOrder.timestamp).all()
+    print('Fetching all orders')
+    orders = Order.query.all()
+    # for order_id in order_ids:
+    #     mealorders = OrderMeal.query.order_
 
     all_orders = []
-    for mealorder in mealorders:
-        order_id = mealorder['order_id']
-        if not order_id in all_orders:
-            all_orders[order_id] = []
-        all_orders[order_id]({
-            'order_id': mealorder['order_id'],
-            
+    for order in orders:
+        order_meals = { 
+            'id': order.id,
+            'meals': [],
+            'timestamp': order.timestamp,
+            'total': order.total
+        }
+        
+        meals = OrderMeal.\
+            query.filter(OrderMeal.order_id == order.id).\
+            with_entities(OrderMeal.meal_id, OrderMeal.quantity).all()
+        
+        [order_meals['meals'].append({ 'meal_id': meal_id, 'quantity': quantity }) for meal_id, quantity in meals]
+        all_orders.append(order_meals)
+    print(all_orders)
+    return all_orders
 
-
-
-    order_schema = OrderSchema(many=True)
-
-    return order_schema.dump(people)
+    return order_schema.dump(all_orders)
 
 def read_order(order_id):
 
