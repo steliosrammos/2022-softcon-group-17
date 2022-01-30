@@ -12,6 +12,31 @@ basePath: "/api"
 
 # Paths supported by the server application
 paths:
+  /meals:
+    get:
+      operationId: "meals.read_all"
+      tags:
+        - "Meal"
+      summary: "The meals data structure supported by the server application"
+      description: "Read the list of meals"
+      responses:
+        200:
+          description: "Successful read meals list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                id:
+                  type: integer
+                  description: Meal ID
+                timestamp:
+                  type: "string"
+                name:
+                  type: "string"
+                price:
+                  type: integer
+                stock:
+                  type: integer
   /orders:
     get:
       operationId: "orders.read_all"

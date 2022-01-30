@@ -5,7 +5,7 @@ from flask import (
 )
 
 from models import (
-        Meals,
+        Meal,
         MealSchema
 )
 
