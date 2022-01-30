@@ -1,6 +1,6 @@
 import os
-from config import db
-from models import Meal, Order, OrderMeal
+from src.config import db
+from src.models import Meal, Order, OrderMeal
 
 # Data to initialize database with
 ORDERS = [
@@ -19,9 +19,12 @@ MEALS = [
 #if os.path.exists("bistro.db"):
 #    os.remove("bistro.db")
 
+print('Dropping tables...')
 db.drop_all()
+print('Dropped all tables')
 # Create the database
 db.create_all()
+print('Created tables')
 
 # iterate over the PEOPLE structure and populate the database
 for meal in MEALS:

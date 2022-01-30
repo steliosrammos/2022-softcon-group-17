@@ -39,11 +39,12 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 # Install Poetry
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
+RUN poetry install
+
 # Change dir
 WORKDIR /app
 
 COPY . .
-RUN poetry install
 
 EXPOSE 5000
 
