@@ -45,6 +45,8 @@ WORKDIR /app
 COPY . .
 RUN poetry install
 
+EXPOSE 5000
+
 CMD poetry run python src/api.py
 
 # FROM python:3.7
