@@ -15,7 +15,8 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Build the Sqlite ULR for SqlAlchemy
 #db_url = "sqlite:///" + os.path.join(basedir, "bistro.db")
-db_url = 'postgresql://postgresadmin:admin123@10.152.183.6:5432/postgresdb'
+# db_url = 'postgresql://postgresadmin:admin123@10.152.183.6:5432/postgresdb'
+db_url = 'postgresql://postgres:3NRZLubCzHG*fVZd9$*H@localhost:5432/softcon-bistro'
 
 # Configure the SqlAlchemy part of the app instance
 app.config["SQLALCHEMY_ECHO"] = True
