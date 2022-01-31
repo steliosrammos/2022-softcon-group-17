@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: softcon-api-container
-        image: ringogroenewegen/softcon-api
+        image: localhost:32000/softcon-api
         ports:
         - containerPort: 5000
         volumeMounts:
