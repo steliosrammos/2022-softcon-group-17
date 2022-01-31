@@ -3,26 +3,48 @@ import { useForm } from 'react-hook-form';
 
 export default function App() {
 
-  let  [meals, setMeals] = useState(null);
+  const [meals, setMeals] = useState([]);
 
   useEffect(() => {
-    //Temorary until we fix API issue
-    fetch('https://dog.ceo/api/breeds/image/random')
+    fetch('http://localhost:5000/api/meals')
       .then(response => response.json())
-      .then(data => setMeals(data.message))
+      .then(data => setMeals(data))
       .catch((error) => {
         console.log('Failed to retrieve meals.', error);
       })
   }, []);
 
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/orders')
+      .then(response => response.json())
+      .then(data => setOrders(data))
+      .catch((error) => {
+        console.log('Failed to retrieve orders.', error);
+      })
+  }, []);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => {
 
-    // Temporary to test out the api
+    const mealsArray = [];
+    let totalPrice = 0;
+
+    const priceMap = new Map();
+    for (let i = 0; i < meals.length; i++){
+      priceMap.set(meals[i].id, meals[i].price);
+    }
+
+    for (const [key,value] of Object.entries(data)){
+      var dict = {"id": parseInt(key), "quantity": parseInt(value)};
+      mealsArray.push(dict);
+      totalPrice += priceMap.get(parseInt(key)) * value;
+    }
+
     const formatedData = {
-      meal: data.Meal,
-      qty:  data.Qty
+      meals: mealsArray,
+      total:  totalPrice
     }
 
     const requestOptions = {
@@ -31,38 +53,66 @@ export default function App() {
         body: JSON.stringify(formatedData)
     };
 
-    fetch("http://127.0.0.1:5000/api/order", requestOptions)
+    fetch("http://127.0.0.1:5000/api/orders", requestOptions)
       .then(response => response.json())
       .then(res => console.log(res))
       .catch((error) => {
         console.log('Failed to send POST request:', error);
       })
   }
+
+  const [[showId, setShowId], [showMeals, setShowMeals], [showTotal, setShowTotal]] = [useState(), useState(), useState()];
+  const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm();
+  const onSubmitVerify = (verifyData) => {
+    var orderNo = verifyData.orderNo;
+    var displayTotal, displayId, displayMeals, mealString = '', orderFound = false;
+    for (let order of orders){
+      if (order.id == orderNo){
+          orderFound = true;
+          displayId = order.id;
+          displayTotal = order.total;
+          displayMeals = order.meals;
+          for (let meal of displayMeals){
+            if (meal.quantity > 0)
+              mealString += '[Meal' + meal.meal_id + ' = ' + meal.quantity + '] ';
+            }
+        }
+      }
+
+    if (!orderFound)
+      mealString = "Order not found!"
+
+    setShowId(displayId);
+    setShowTotal(displayTotal);
+    setShowMeals(mealString);
+  }
+
+
   console.log(errors);
   return (
     <section className="App">
+
     <div className="title">Bistro Delivery</div>
     <div className="text-form">What is your order?</div>
 
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form key={1} onSubmit={handleSubmit(onSubmit)}>
 
+    {meals.length > 0 ?
     <table>
       <tbody>
         <tr>
           <th>Meal No. </th>
           <th>Description </th>
-          <th>Price</th>
-          <th>Qty Avail.</th>
+          <th>Price($)</th>
           <th>Order </th>
         </tr>
 
     		<tr>
     			<td>1</td>
-    			<td>Spicy Cabbage Soup</td>
-    			<td>12$ </td>
-    			<td>3 </td>
+    			<td><div key={meals[0].id}> {meals[0].name} </div></td>
+    			<td><div key={meals[0].id}> {meals[0].price} </div></td>
     			<td>
-          <select {...register("Choice_1")}>
+          <select {...register("1")}>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -78,11 +128,10 @@ export default function App() {
     		</tr>
     		<tr>
     			<td>2</td>
-    			<td>Calamari with Mushrooms</td>
-    			<td>15$ </td>
-    			<td>7 </td>
+          <td><div key={meals[1].id}> {meals[1].name} </div></td>
+    			<td><div key={meals[1].id}> {meals[1].price} </div></td>
     			<td>
-          <select {...register("Choice_2")}>
+          <select {...register("2")}>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -98,11 +147,10 @@ export default function App() {
     		</tr>
     		<tr>
     			<td>3</td>
-    			<td>Beef with Broccoli</td>
-    			<td>24$</td>
-    			<td>2 </td>
+          <td><div key={meals[2].id}> {meals[2].name} </div></td>
+    			<td><div key={meals[2].id}> {meals[2].price} </div></td>
     			<td>
-          <select {...register("Choice_3")}>
+          <select {...register("3")}>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -118,10 +166,31 @@ export default function App() {
     		</tr>
       </tbody>
     </table>
-
-      <input type="submit" value="Edit order"/>
+    :<p>Loading</p>
+  }
       <input type="submit" value="Send order"/>
+
     </form>
+
+    <form key={2} onSubmit={handleSubmit2(onSubmitVerify)}>
+      <input type="text" placeholder="Order ID" {...register2("orderNo", {required: true, maxLength: 100})} />
+      <input type="submit" value="Check order"/>
+      <table>
+        <tbody>
+          <tr>
+            <th> Order No. </th>
+            <th> Meals&Quantity</th>
+            <th> Total Price($)</th>
+          </tr>
+          <tr>
+            <td>{showId}</td>
+            <td>{showMeals}</td>
+            <td>{showTotal}</td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
 
     <div className="footer">
       <p> &copy; Software Containerization 2022 [Group 17] </p>

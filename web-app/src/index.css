@@ -21,8 +21,7 @@ body {
   font-family: monospace;
   font-size: 50px;
   text-align: center;
-  margin-top: 100px;
-  padding-bottom: 100px;
+  margin-top: 10px;
 }
 
 select, option {
@@ -35,7 +34,7 @@ select, option {
   cursor: pointer;
 }
 
-input{
+input[type=submit]{
   background-color: #35858B;
   border: none;
   color: white;
@@ -48,13 +47,18 @@ input{
   border-radius: 10px;
 }
 
-input:hover {
+input[type=submit]:hover {
   background-color: #219F94;
+}
+
+input[type=text]{
+  padding: 10px 0px;
 }
 
 table{
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
 }
 
 th{
@@ -64,6 +68,14 @@ th{
 
 td{
   padding-top: 5px;
+}
+
+h1{
+  color: white;
+}
+
+form{
+  margin-top: 20px;
 }
 
 .footer {
