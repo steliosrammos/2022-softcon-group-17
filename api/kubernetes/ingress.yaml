@@ -1,19 +1,19 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-  name: tomcat
+  name: softcon-api-ingress
 spec:
-  tls:
-    - hosts:
-      - minikubetomcat
-      secretName: minikubetomcat-secret
+#  tls:
+#    - hosts:
+#      - minikubetomcat
+#      secretName: minikubetomcat-secret
   rules:
-  - host: minikubetomcat
-    http:
+  - http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: tomcat
-          servicePort: 8082
+          service:
+            name: softcon-api-service
+            port:
+              number: 8082

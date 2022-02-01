@@ -20,10 +20,10 @@ spec:
         ports:
         - containerPort: 5000
         volumeMounts:
-            - name: foo
-              mountPath: "/etc/foo"
+            - name: dbpwd
+              mountPath: "/etc/db_pwd"
               readOnly: true
       volumes:
-      - name: foo
+      - name: dbpwd
         secret:
           secretName: postgres-secret

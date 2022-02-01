@@ -36,13 +36,15 @@ ENV PYTHONUNBUFFERED=1 \
 # Prepend poetry and venv to path
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
+# Change dir
+WORKDIR /app
+
 # Install Poetry
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
-RUN poetry install
+COPY pyproject.toml .
 
-# Change dir
-WORKDIR /app
+RUN poetry install
 
 COPY . .
 
