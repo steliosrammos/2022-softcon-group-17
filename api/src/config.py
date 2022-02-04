@@ -22,7 +22,7 @@ try:
     POSTGRES_SERVICE = os.environ['POSTGRES_SERVICE_PORT_5432_TCP_ADDR']
     print('Using environment variable to resolve DB service')
 except:
-    POSTGRES_SERVICE = '10.152.183.234'
+    POSTGRES_SERVICE = '10.152.183.126'
     print('Using IP address for DB service')
 
 

@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: black;
+  background-color: #1A1A40;
   color: white;
   text-align: center;
 }
@@ -15,13 +15,17 @@ body {
   font-size: 100px;
   text-align: center;
   margin-top: 50px;
+  color: #FFC900;
 }
 
 .text-form{
-  font-family: monospace;
-  font-size: 50px;
+  font-family: cursive;
+  text-decoration: underline;
+  font-size: 30px;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 40px;
+  font-weight: bold;
+  color: #219F94;
 }
 
 select, option {
@@ -70,19 +74,22 @@ td{
   padding-top: 5px;
 }
 
-h1{
-  color: white;
-}
-
-form{
-  margin-top: 20px;
-}
-
 .footer {
-   position:absolute;
-   bottom:0;
-   width:100%;
-   height:60px;
-   background: black;
-   color: white;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.grid-container {
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+.grid-child {
+  display: inline-block;
+  border: 1px solid #219F94;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+  margin-left: 10px;
 }
