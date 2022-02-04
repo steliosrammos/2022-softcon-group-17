@@ -1,0 +1,33 @@
+api:
+  labelApp: "api"
+  minReplicas: 2
+  replicas: 3
+  maxReplicas: 10
+  averageCpuUtilization: 60
+  image: api:0.1.0
+  targetPort: 5000 # Entry port of the pods
+  containerName: api-container
+  deploymentName: api-deployment
+  serviceName: api-service
+  serviceType: ClusterIP
+  servicePort: 5000 # Entry port of the service
+
+webApp:
+  labelApp: "web-app"
+  minReplicas: 2
+  replicas: 3
+  maxReplicas: 10
+  averageCpuUtilization: 60
+  image: web-app:0.1.0
+  targetPort: 3000 # Entry port of the pods
+  containerName: web-app-container
+  deploymentName: web-app-deployment
+  serviceName: web-app-service
+  serviceType: ClusterIP
+  servicePort: 5001 # Entry port of the service
+
+dbPassword:
+  name: dbpassword
+  key: DB_PASSWORD
+  secret: YWRtaW4xMjMK # 'admin123' in Base64
+  type: Opaque
