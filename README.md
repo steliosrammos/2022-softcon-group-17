@@ -1,5 +1,10 @@
 # 2022-softcon-group-17
 
+## TODO
+- [ ] Front-end
+    - [ ] Get api ip address front environment variables in the pod
+- [ ] SSL for front-end
+
 ## Persistent layer
 - [ ] Create a Deployment/Statefulset
 - [ ] Create a Service
