@@ -5,10 +5,23 @@ deploy_db:
 
 setup_ssl:
 # Create key and cert
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=kube-master-gui"
-
+	@if [ ! -f tls.crt ]; then\
+	  echo "Does not exist";\
+	  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=kube-master-gui";\
+	fi
 # Create secret
-	microk8s kubectl create secret tls tls-secret --cert=tls.crt --key=tls.key
+	#TLS_CERT=$(microk8s kubectl get secret tls-secret -o 'go-template={{index .data "tls.crt"}}' --ignore-not-found);\
+	@TLS_CERT='blob';\
+	@echo $$TLS_CERT;\
+	@if [ -z $$TLS_CERT ]; then\
+	  echo 'Secret does not exist!';\
+	  microk8s kubectl create secret tls tls-secret --cert=tls.crt --key=tls.key;\
+	else\
+	  echo 'Nope';\
+	fi
+	#@echo $(cat tls.crt)
+	#@echo $(microk8s kubectl get secret tls-secret -o 'go-template={{index .data "tls.crt"}}')
+	#microk8s kubectl create secret tls tls-secret --cert=tls.crt --key=tls.key
 
 # Disable ingress
 	microk8s disable ingress
