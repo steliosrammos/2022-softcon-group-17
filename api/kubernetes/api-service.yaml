@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: softcon-api-service
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: http
     port: 8082

@@ -1,19 +1,19 @@
 api:
-  labelApp: "api"
+  labelApp: softcon-api
   minReplicas: 2
   replicas: 3
   maxReplicas: 10
   averageCpuUtilization: 60
-  image: api:0.1.0
+  image: localhost:32000/softcon-api:latest
   targetPort: 5000 # Entry port of the pods
-  containerName: api-container
-  deploymentName: api-deployment
-  serviceName: api-service
+  containerName: softcon-api-container
+  deploymentName: softcon-api-deployment
+  serviceName: softcon-api-service
   serviceType: ClusterIP
-  servicePort: 5000 # Entry port of the service
+  servicePort: 8082 # Entry port of the service
 
 webApp:
-  labelApp: "web-app"
+  labelApp: softcon-frontend
   minReplicas: 2
   replicas: 3
   maxReplicas: 10

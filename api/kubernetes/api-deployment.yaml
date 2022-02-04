@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: softcon-api-container
-        image: localhost:32000/softcon-api:v1.0.0
+        image: localhost:32000/softcon-api:latest
         ports:
         - containerPort: 5000
         volumeMounts:

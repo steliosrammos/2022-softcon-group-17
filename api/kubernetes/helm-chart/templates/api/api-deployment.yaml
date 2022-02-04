@@ -1,4 +1,4 @@
-apiVersion: apps/v3
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.api.deploymentName }}
@@ -19,9 +19,11 @@ spec:
         image: {{ .Values.api.image }}
         ports:
         - containerPort: 5000
-    env:
-      - name: {{ .Values.dbPassword.key }}
-        valueFrom:
-          secretKeyRef:
-            name: {{ .Values.dbPassword.name }}
-            key: {{ .Values.dbPassword.key }}
+        volumeMounts:
+            - name: dbpwd
+              mountPath: "/etc/db_pwd"
+              readOnly: true
+      volumes:
+      - name: dbpwd
+        secret:
+          secretName: postgres-secret

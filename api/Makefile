@@ -6,6 +6,15 @@ deploy_db:
 	-f kubernetes/postgres-secret.yaml -f kubernetes/postgres-storage.yaml \
 	-f kubernetes/postgres-deployment.yaml -f kubernetes/postgres-service.yaml
 
+delete_db:
+	microk8s kubectl delete deploy postgres-deployment;
+	microk8s kubectl delete service postgres-service;
+	microk8s kubectl delete pvc postgres-pv-claim;
+	microk8s kubectl delete pv postgres-pv-volume;
+	microk8s kubectl delete secret postgres-secret;
+	microk8s kubectl delete secret dbpassword;
+	microk8s kubectl delete configmap postgres-config;
+
 setup_ssl:
  #Create key and cert
 	@if [ ! -f tls.crt ]; then\
@@ -40,7 +49,7 @@ delete_api:
 	microk8s kubectl delete secret tls-secret
 
 rollout_api:
-	docker build . --tag localhost:32000/softcon-api
-	docker push localhost:32000/softcon-api
+	docker build . --tag localhost:32000/softcon-api:latest
+	docker push localhost:32000/softcon-api:latest
 	microk8s kubectl rollout restart deploy softcon-api-deployment
 
