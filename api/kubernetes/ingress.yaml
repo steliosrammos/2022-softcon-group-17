@@ -3,10 +3,9 @@ kind: Ingress
 metadata:
   name: softcon-api-ingress
 spec:
-#  tls:
-#    - hosts:
-#      - minikubetomcat
-#      secretName: minikubetomcat-secret
+  tls:
+    - hosts:
+      secretName: tls-secret
   rules:
   - http:
       paths:
