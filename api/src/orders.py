@@ -84,13 +84,13 @@ def update(order_id, order):
 
     for meal in order['meals']:
         meal_id = meal['id']
-        ordermeal = OrderMeal.query.filter(OrderMeal.order_id == order_id and OrderMeal.meal_id == meal_id).one_or_none()
+        ordermeal = OrderMeal.query.filter(OrderMeal.order_id == order_id, OrderMeal.meal_id == meal_id).one_or_none()
         if not ordermeal:
             abort(404, f'MealOrder not found for Order ID: {order_id} and Meal ID: {meal_id}')
         ordermeal.quantity = meal['quantity']
-    order = Order.query.filter(Order.id == order_id).one_or_none()
-    if not order:
+    order_result = Order.query.filter(Order.id == order_id).one_or_none()
+    if not order_result:
         abort(404, f'Order not found for Order ID: {order_id}')
-    order.total = order['total']
+    order_result.total = order['total']
 
     db.session.commit()
