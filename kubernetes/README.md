@@ -10,11 +10,15 @@ The `helm-chart` describes the templates needed to run `softcon-bistro-api`, the
 
 To install the chart, run the following command: 
 
-```microk8s helm3 install softcon-bistro ./helm-chart``` 
+```
+microk8s helm3 install softcon-bistro ./helm-chart
+``` 
 
 To upgrade the chart after a change run:
 
-```microk8s helm3 upgrade softcon-bistro ./helm-chart```
+```
+microk8s helm3 upgrade softcon-bistro ./helm-chart
+```
 
 ### Stress test
 
@@ -26,10 +30,14 @@ to send requests to the api.
 
 To run the stress test, run the following command:
 
-```./stressingmeout.sh```
+```
+./stressingmeout.sh
+```
 
 ### Clean up
 
 To clean up the entire installation, use the following command: 
 
-```microk8s uninstall softcon-bistro```
+```
+microk8s uninstall softcon-bistro
+```
