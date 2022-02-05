@@ -12,7 +12,7 @@ delete_db:
 	microk8s kubectl delete pvc postgres-pv-claim;
 	microk8s kubectl delete pv postgres-pv-volume;
 	microk8s kubectl delete secret postgres-secret;
-	microk8s kubectl delete secret dbpassword;
+#	microk8s kubectl delete secret dbpassword;
 	microk8s kubectl delete configmap postgres-config;
 
 setup_ssl:
