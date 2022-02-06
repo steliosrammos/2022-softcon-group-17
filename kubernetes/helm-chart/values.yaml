@@ -10,21 +10,21 @@ api:
   deploymentName: softcon-api-deployment
   serviceName: softcon-api-service
   serviceType: ClusterIP
-  servicePort: 8082 # Entry port of the service
+  servicePort: 8083 # Entry port of the service
 
 webApp:
-  labelApp: softcon-frontend
+  labelApp: softcon-web-app
   minReplicas: 2
   replicas: 3
   maxReplicas: 10
   averageCpuUtilization: 60
-  image: web-app:0.1.0
+  image: localhost:32000/softcon-web-app:latest
   targetPort: 3000 # Entry port of the pods
-  containerName: web-app-container
-  deploymentName: web-app-deployment
-  serviceName: web-app-service
+  containerName: softcon-web-app-container
+  deploymentName: softcon-web-app-deployment
+  serviceName: softcon-web-app-service
   serviceType: ClusterIP
-  servicePort: 5001 # Entry port of the service
+  servicePort: 8082 # Entry port of the service
 
 dbPassword:
   name: dbpassword

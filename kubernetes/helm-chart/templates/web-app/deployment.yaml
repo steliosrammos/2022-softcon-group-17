@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.webApp.deploymentName }}
+  labels:
+    app: {{ .Values.webApp.labelApp }}
+spec:
+  replicas: {{ .Values.webApp.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.webApp.labelApp }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.webApp.labelApp }}
+    spec:
+      containers:
+      - name: {{ .Values.webApp.containerName }}
+        image: {{ .Values.webApp.image }}
+        ports:
+        - containerPort: 3000
+        resources:
+          # You must specify requests for CPU to autoscale
+          # based on CPU utilization
+          requests:
+            cpu: "250m"
