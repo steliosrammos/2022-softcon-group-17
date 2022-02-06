@@ -58,13 +58,14 @@ export default function App() {
     fetch(`${API_URL}/api/orders`, requestOptions)
       .then(response => response.json())
       .then(res => {
+        setChangeMade(changeMade+1);
         console.log("POST Success!");
         console.log(res);
       })
       .catch((error) => {
         console.log('Failed to send POST request:', error);
+        console.log(errors);
       })
-    setChangeMade(changeMade+1);
   }
 
 //check
@@ -92,6 +93,8 @@ export default function App() {
     setShowId(displayId);
     setShowTotal(displayTotal);
     setShowMeals(mealString);
+
+    console.log(errors2);
   }
 
   //edit
@@ -128,14 +131,14 @@ export default function App() {
     fetch(`${API_URL}/api/orders/${updatedOrder}`, requestOptions)
       .then(response => {
         if (response.status === 204){
+          setChangeMade(changeMade+1);
           console.log("PUT Success!")
       }
       })
       .catch((error3) => {
         console.log('Failed to send PUT request:', error3);
+        console.log(errors3);
       })
-
-    setChangeMade(changeMade+1);
   }
 
   return (
