@@ -13,7 +13,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "prestart": "export REACT_APP_API_URL=localhost:46273 && printenv > .env",
+    "prestart": "export REACT_APP_API_URL=localhost && printenv > .env",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

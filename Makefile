@@ -1,6 +1,20 @@
 TLS_CERT := $(shell microk8s kubectl get secret tls-secret -o 'go-template={{index .data "tls.crt"}}' --ignore-not-found)
-# TLS_KEY := $(shell microk8s kubectl get secret tls-secret -o 'go-template={{index .data "tls.key"}}' --ignore-not-found)
 
+############
+# DEMO CALLS
+############
+demo_rbac:
+	bash demo.sh demo_rbac
+
+demo_hpa:
+	@echo "Demonstrating the HPA"
+	@echo "starting ./stressingmeout.sh"
+	kubernetes/stressingmeout.sh &
+	microk8s kubectl get hpa -w
+
+#########
+# UPGRADE
+#########
 build_webapp:
 	docker build web-app --tag localhost:32000/softcon-web-app:latest
 	docker push localhost:32000/softcon-web-app:latest
