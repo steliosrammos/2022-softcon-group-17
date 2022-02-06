@@ -7,4 +7,4 @@ rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["pods"]
   resourceNames: ["postgres"]
-  verbs: ["get", "watch", "list", "update", "create"]
+  verbs: ["get", "watch", "list", "update", "create", "delete"]

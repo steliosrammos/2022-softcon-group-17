@@ -16,12 +16,16 @@ webApp:
   labelApp: softcon-web-app
   minReplicas: 2
   replicas: 3
+  canaryReplicas: 3
   maxReplicas: 10
   averageCpuUtilization: 60
   image: localhost:32000/softcon-web-app:latest
+  canaryImage: localhost:32000/softcon-web-app:canary
   targetPort: 3000 # Entry port of the pods
   containerName: softcon-web-app-container
+  canaryContainerName: softcon-web-app-canary-container
   deploymentName: softcon-web-app-deployment
+  canaryDeploymentName: softcon-web-app-canary-deployment
   serviceName: softcon-web-app-service
   serviceType: ClusterIP
   servicePort: 8083 # Entry port of the service

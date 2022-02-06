@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.webApp.canaryDeploymentName }}
+  labels:
+    app: {{ .Values.webApp.labelApp }}
+spec:
+  replicas: {{ .Values.webApp.canaryReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.webApp.labelApp }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.webApp.labelApp }}
+    spec:
+      containers:
+      - name: {{ .Values.webApp.canaryContainerName }}
+        image: {{ .Values.webApp.canaryImage }}
+        ports:
+        - containerPort: 3000
+        resources:
+          # You must specify requests for CPU to autoscale
+          # based on CPU utilization
+          requests:
+            cpu: "100m"
+        env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
