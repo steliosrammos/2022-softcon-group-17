@@ -1,6 +1,12 @@
 TLS_CERT := $(shell microk8s kubectl get secret tls-secret -o 'go-template={{index .data "tls.crt"}}' --ignore-not-found)
 # TLS_KEY := $(shell microk8s kubectl get secret tls-secret -o 'go-template={{index .data "tls.key"}}' --ignore-not-found)
 
+build_webapp:
+	docker build web-app --tag localhost:32000/softcon-web-app:latest
+	docker push localhost:32000/softcon-web-app:latest
+	microk8s helm3 uninstall bistro
+	microk8s helm3 install bistro kubernetes/helm-chart
+
 deploy_db:
 	microk8s kubectl apply -f kubernetes/postgres-config.yaml \
 	-f kubernetes/postgres-secret.yaml -f kubernetes/postgres-storage.yaml \

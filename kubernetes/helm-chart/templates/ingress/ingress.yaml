@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: softcon-api-ingress
+  name: softcon-ingress
 spec:
   tls:
     - hosts:
@@ -10,6 +10,13 @@ spec:
   - http:
       paths:
       - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: softcon-web-app-service
+            port:
+              number: 8083
+      - path: /api
         pathType: Prefix
         backend:
           service:

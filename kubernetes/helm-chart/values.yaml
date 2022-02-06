@@ -10,7 +10,7 @@ api:
   deploymentName: softcon-api-deployment
   serviceName: softcon-api-service
   serviceType: ClusterIP
-  servicePort: 8083 # Entry port of the service
+  servicePort: 8082 # Entry port of the service
 
 webApp:
   labelApp: softcon-web-app
@@ -24,7 +24,7 @@ webApp:
   deploymentName: softcon-web-app-deployment
   serviceName: softcon-web-app-service
   serviceType: ClusterIP
-  servicePort: 8082 # Entry port of the service
+  servicePort: 8083 # Entry port of the service
 
 dbPassword:
   name: dbpassword

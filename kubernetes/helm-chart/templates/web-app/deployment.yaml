@@ -24,3 +24,8 @@ spec:
           # based on CPU utilization
           requests:
             cpu: "250m"
+        env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP

@@ -1,3 +1,4 @@
+import API_URL from './constants';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -6,7 +7,8 @@ export default function App() {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/meals')
+    console.log(`API_URL: ${API_URL}`);
+    fetch(`${API_URL}/api/meals`)
       .then(response => response.json())
       .then(data => setMeals(data))
       .catch((error) => {
@@ -17,7 +19,7 @@ export default function App() {
   const [changeMade, setChangeMade] = useState(0);
   const [orders, setOrders] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:5000/api/orders')
+    fetch(`${API_URL}/api/orders`)
       .then(response => response.json())
       .then(data => setOrders(data))
       .catch((error) => {
@@ -54,7 +56,7 @@ export default function App() {
         body: JSON.stringify(formatedData)
     };
 
-    fetch("http://127.0.0.1:5000/api/orders", requestOptions)
+    fetch(`${API_URL}/api/orders`, requestOptions)
       .then(response => response.json())
       .then(res => {
         console.log("POST Success!");
@@ -124,7 +126,7 @@ export default function App() {
         body: JSON.stringify(formatedData)
     };
 
-    fetch(`http://127.0.0.1:5000/api/orders/${updatedOrder}`, requestOptions)
+    fetch(`${API_URL}/api/orders/${updatedOrder}`, requestOptions)
       .then(response => {
         if (response.status === 204){
           console.log("PUT Success!")
