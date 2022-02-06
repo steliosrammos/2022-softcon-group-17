@@ -30,7 +30,6 @@ export default function App() {
 //submit
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => {
-    setChangeMade(changeMade+1);
     const mealsArray = [];
     let totalPrice = 0;
 
@@ -65,6 +64,7 @@ export default function App() {
       .catch((error) => {
         console.log('Failed to send POST request:', error);
       })
+    setChangeMade(changeMade+1);
   }
 
 //check
@@ -97,7 +97,6 @@ export default function App() {
   //edit
   const { register: register3, handleSubmit: handleSubmit3, formState: { errors: errors3 } } = useForm();
   const onEdit = (data) => {
-    setChangeMade(changeMade+1);
     let mealsArrayUpdate = [];
     let totalPrice = 0;
 
@@ -136,6 +135,7 @@ export default function App() {
         console.log('Failed to send PUT request:', error3);
       })
 
+    setChangeMade(changeMade+1);
   }
 
   return (
